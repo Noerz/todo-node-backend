@@ -5,7 +5,8 @@ const models = initModels(db);
 
 
 const verifyToken = async (req, res, next) => {
-  const token = req.header("Authorization");
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
 
   if (!token) {
     return res.status(401).json({
@@ -15,8 +16,9 @@ const verifyToken = async (req, res, next) => {
   }
 
   try {
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    const verified = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
     req.user = verified;
+    console.log("Verified User:", verified);
     next();
   } catch (error) {
     console.error("Token Verification Error:", error);
