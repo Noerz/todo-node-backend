@@ -1,4 +1,4 @@
-const { Register,Login } = require("../controller/UserController");
+const { Register,Login } = require("../controllers/UserController");
 
 const userRoutes = (router) => {
   router.post("/register", Register);
